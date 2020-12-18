@@ -33,7 +33,7 @@ function replacePlaceHolder(template, label, value) {
   return template.replaceAll(placeHolderRegex, value)
 }
 
-const Quote = ({ title, template, placeholder }) => {
+const Quote = ({ snippetId, title, template, placeholder }) => {
   const [placeHolders, setPlaceHolders] = React.useState(
     extractPlaceHolder(template)
   )
@@ -58,17 +58,38 @@ const Quote = ({ title, template, placeholder }) => {
     )
   })
 
+  const handleCopy = React.useCallback(() => {
+    const range = document.createRange()
+    range.selectNode(document.querySelector(`.${snippetId}.result`))
+    window.getSelection().addRange(range)
+
+    try {
+      document.execCommand("copy")
+      window.getSelection().removeAllRanges()
+    } catch (err) {
+      console.error("copy error", err)
+    }
+  })
+
   return (
     <div className="shadow container p-5 space-y-2">
       <h3 className="font-bold">{title}</h3>
-      <p>{renderResult()}</p>
+      <p className={`${snippetId} result`}>{renderResult()}</p>
+      <div>
+        <button
+          className="bg-green-500 px-2 py-1 text-white leading-4"
+          onClick={handleCopy}
+        >
+          复制
+        </button>
+      </div>
       <div className="space-y-2">
         {placeHolders.map(({ label, value }) => {
           return (
             <div className="grid grid-cols-1 gap-4" key={label}>
               <label htmlFor={label}>{label}</label>
               <input
-                className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
+                className="block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
                 type="text"
                 name={label}
                 value={value}
