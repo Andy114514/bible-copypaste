@@ -30,7 +30,7 @@ function extractPlaceHolder(template) {
  */
 function replacePlaceHolder(template, label, value) {
   const placeHolderRegex = new RegExp(`\\$\\{${label}\\|.*?\\}`, "g")
-  return template.replaceAll(placeHolderRegex, value)
+  return template.replace(placeHolderRegex, value)
 }
 
 const Quote = ({ snippetId, title, template, placeholder }) => {
