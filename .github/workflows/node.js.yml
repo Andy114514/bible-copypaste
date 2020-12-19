@@ -27,6 +27,7 @@ jobs:
         name: 'Candy'
         email: 'cnandy114514@outlook.com'
         token: '${{ secrets.DEPLOY_TOKEN }}'
+        actor: 'Andy114514'   
         
     - run: yarn global add gatsby-cli
     - run: yarn
