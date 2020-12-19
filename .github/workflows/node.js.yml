@@ -22,6 +22,11 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - uses: oleksiyrudenko/gha-git-credentials@v2-latest 
+      with:
+        name: 'Candy'
+        email: 'cnandy114514@outlook.com'
+        token: '${{ secrets.DEPLOY_TOKEN }}'
         
     - run: yarn global add gatsby-cli
     - run: yarn
