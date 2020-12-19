@@ -22,13 +22,13 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - uses: oleksiyrudenko/gha-git-credentials@v2-latest 
-      with:
-        name: 'Candy'
-        email: 'cnandy114514@outlook.com'
-        token: '${{ secrets.DEPLOY_TOKEN }}'
-        actor: 'Andy114514'   
-        
     - run: yarn global add gatsby-cli
     - run: yarn
-    - run: yarn deploy
+    - run: gatsby build --prefix-paths
+    - run: git config --global user.name "Candy"
+    - run: git config --global user.email "cnandy114514@outlook.com"
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        personal_token: ${{ secrets.DEPLOY_TOKEN }}
+        publish_dir: ./public
